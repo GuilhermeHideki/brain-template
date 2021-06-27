@@ -1,0 +1,20 @@
+variables:
+  FILES: '**/*.md'
+
+stages:
+  - tangle
+
+tangle:
+  image: guilhermehideki/lmt
+  stage: tangle
+  only:
+    - main
+  before_script:
+    - shopt -s globstar
+  script:
+    - lmt $FILES
+  artifacts:
+    name: $CI_COMMIT_REF_SLUG
+    expire_in: 1 day
+    paths:
+      - files
